@@ -2,17 +2,15 @@ dist: trusty
 sudo: false
 cache:
   directories:
-  - ~/emscripten_manual_cache
+  - /home/travis/.emscripten_cache/
 install:
-- find ~/emscripten_manual_cache -type f
-
 - mkdir -p emsdk-tools
+- rsync -a /home/travis/.emscripten_cache/ emsdk-tools/emscripten_cache_backup
+
 - cp support/libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb emsdk-tools/
 - cd emsdk-tools && ar xv libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb && cd ..
 - tar -xzf emsdk-tools/data.tar.gz -C emsdk-tools
 - export LD_LIBRARY_PATH=${PWD}/emsdk-tools/usr/lib
-
-- find ~/emscripten_manual_cache -type f
 
 - curl https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz -o emsdk-tools/emsdk-portable.tar.gz
 - tar -xzf emsdk-tools/emsdk-portable.tar.gz -C emsdk-tools
@@ -21,16 +19,12 @@ install:
 - emsdk-tools/emsdk-portable/emsdk activate sdk-1.37.28-64bit
 - source emsdk-tools/emsdk-portable/emsdk_env.sh
 
-- find ~/emscripten_manual_cache -type f
-
-- emcc -v --cache ~/emscripten_manual_cache
+- emcc -v
 - cat ~/.emscripten
-
-- find ~/emscripten_manual_cache -type f
+- rsync -a emsdk-tools/emscripten_cache_backup/ /home/travis/.emscripten_cache
 
 script:
 - mkdir -p dist
-- emcc src/hello_world.c -o dist/a.out.js --cache ~/emscripten_manual_cache
+- emcc src/hello_world.c -o dist/a.out.js
 - node dist/a.out.js
 - git status
-- find ~/emscripten_manual_cache -type f
