@@ -6,7 +6,7 @@ cache:
 install:
 - find /home/travis/.emscripten_cache/ -type f
 - mkdir -p emsdk-tools
-- rsync -r /home/travis/.emscripten_cache emsdk-tools/emscripten_cache_backup
+- rsync -a /home/travis/.emscripten_cache/ emsdk-tools/emscripten_cache_backup
 - cp support/libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb emsdk-tools/
 - cd emsdk-tools && ar xv libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb && cd ..
 - tar -xzf emsdk-tools/data.tar.gz -C emsdk-tools
@@ -22,7 +22,7 @@ install:
 - emcc -v
 - cat ~/.emscripten
 - gcc -v
-- rsync -r emsdk-tools/emscripten_cache_backup /home/travis/.emscripten_cache
+- rsync -a emsdk-tools/emscripten_cache_backup/ /home/travis/.emscripten_cache
 - find /home/travis/.emscripten_cache/ -type f
 
 script:
