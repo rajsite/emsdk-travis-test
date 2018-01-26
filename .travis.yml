@@ -2,21 +2,22 @@ dist: trusty
 sudo: false
 
 install:
-- curl https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz --create-dirs -o emsdk/emsdk-portable.tar.gz
-- tar -xzf emsdk/emsdk-portable.tar.gz -C emsdk
-- ./emsdk/emsdk-portable/emsdk update
-- ./emsdk/emsdk-portable/emsdk install sdk-1.37.28-64bit > emsdk/emsdkinstall.log
-- ./emsdk/emsdk-portable/emsdk activate sdk-1.37.28-64bit
-- cp support/libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb emsdk/
-- cd emsdk && ar xv libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb && cd ..
-- tar -xzf emsdk/data.tar.gz -C emsdk
-- export LD_LIBRARY_PATH=${PWD}/emsdk/usr/lib
-- source emsdk/emsdk-portable/emsdk_env.sh
+- curl https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz --create-dirs -o emsdk-tools/emsdk-portable.tar.gz
+- tar -xzf emsdk-tools/emsdk-portable.tar.gz -C emsdk-tools
+- ./emsdk-tools/emsdk-portable/emsdk update
+- ./emsdk-tools/emsdk-portable/emsdk install sdk-1.37.28-64bit > emsdk-tools/emsdkinstall.log
+- ./emsdk-tools/emsdk-portable/emsdk activate sdk-1.37.28-64bit
+- cp support/libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb emsdk-tools/
+- cd emsdk-tools && ar xv libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb && cd ..
+- tar -xzf emsdk-tools/data.tar.gz -C emsdk-tools
+- export LD_LIBRARY_PATH=${PWD}/emsdk-tools/usr/lib
+- source emsdk-tools/emsdk-portable/emsdk_env.sh
 - emcc -v
 - cat ~/.emscripten
-- emcc -v
 - gcc -v
 
 script:
-- emcc src/hello_world.c
+- mkdir -p dist
+- emcc src/hello_world.c -o dist/a.out.js
+- node dist/a.out.js
 - git status
