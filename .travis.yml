@@ -23,14 +23,14 @@ install:
 
 - find ~/emscripten_manual_cache -type f
 
-- emcc -v --cache ~/emscripten_manual_cache
+- emcc --cache ~/emscripten_manual_cache -v 
 - cat ~/.emscripten
 
 - find ~/emscripten_manual_cache -type f
 
 script:
 - mkdir -p dist
-- emcc src/hello_world.c -o dist/a.out.js --cache ~/emscripten_manual_cache
+- emcc --cache ~/emscripten_manual_cache -o dist/a.out.js src/hello_world.c 
 - node dist/a.out.js
 - git status
 - find ~/emscripten_manual_cache -type f
