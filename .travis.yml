@@ -6,7 +6,7 @@ install:
 - emsdk-portable/emsdk update
 - emsdk-portable/emsdk install sdk-1.37.28-64bit > emsdk_install.log
 - emsdk-portable/emsdk activate sdk-1.37.28-64bit
-- source emsdk-tools/emsdk-portable/emsdk_env.sh
+- source emsdk-portable/emsdk_env.sh
 
 - emcc -v
 - cat ~/.emscripten
