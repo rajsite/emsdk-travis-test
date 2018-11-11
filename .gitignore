@@ -31,5 +31,7 @@
 *.out
 *.app
 
-emsdk-tools/
+emsdk-portable/
+*.tar.gz
+*.log
 dist/

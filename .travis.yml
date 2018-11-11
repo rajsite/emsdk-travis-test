@@ -1,27 +1,15 @@
-dist: trusty
+dist: xenial
 sudo: false
-cache:
-  directories:
-  - /home/travis/.emscripten_cache/
 install:
-- mkdir -p emsdk-tools
-- rsync -a /home/travis/.emscripten_cache/ emsdk-tools/emscripten_cache_backup
-
-- cp support/libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb emsdk-tools/
-- cd emsdk-tools && ar xv libstdc++6_5.1.0-0ubuntu11~10.04.2_amd64.deb && cd ..
-- tar -xzf emsdk-tools/data.tar.gz -C emsdk-tools
-- export LD_LIBRARY_PATH=${PWD}/emsdk-tools/usr/lib
-
-- curl https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz -o emsdk-tools/emsdk-portable.tar.gz
-- tar -xzf emsdk-tools/emsdk-portable.tar.gz -C emsdk-tools
-- emsdk-tools/emsdk-portable/emsdk update
-- emsdk-tools/emsdk-portable/emsdk install sdk-1.37.28-64bit > emsdk-tools/emsdkinstall.log
-- emsdk-tools/emsdk-portable/emsdk activate sdk-1.37.28-64bit
+- curl https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz -o emsdk-portable.tar.gz
+- tar -xzf emsdk-portable.tar.gz
+- emsdk-portable/emsdk update
+- emsdk-portable/emsdk install sdk-1.37.28-64bit > emsdk_install.log
+- emsdk-portable/emsdk activate sdk-1.37.28-64bit
 - source emsdk-tools/emsdk-portable/emsdk_env.sh
 
 - emcc -v
 - cat ~/.emscripten
-- rsync -a emsdk-tools/emscripten_cache_backup/ /home/travis/.emscripten_cache
 
 script:
 - mkdir -p dist
